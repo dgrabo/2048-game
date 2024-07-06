@@ -105,6 +105,21 @@ def get_random_pos(tiles):
 
     return row, col
 
+def move_tiles(window, tiles, clock, direction):
+    updated = True
+    blocks = set()
+
+    if direction == "left":
+        sort_func = lambda x: x.col
+    elif direction == "right":
+        pass
+
+    elif direction == "up":
+        pass
+    
+    elif direction == "down":
+        pass
+
 def generate_tiles():
     tiles = {}
     for _ in range(2):
