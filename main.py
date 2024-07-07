@@ -69,7 +69,8 @@ class Tile:
         pass
 
     def move(self, delta):
-        pass
+        self.x += delta[0]
+        self.y += delta[1]
 
 
 def draw_grid(window):
@@ -111,6 +112,16 @@ def move_tiles(window, tiles, clock, direction):
 
     if direction == "left":
         sort_func = lambda x: x.col
+        reverse = False
+        delta = (-MOVE_VEL, 0)
+        boundary_check = lambda tile: tile.col == 0
+        get_next_tile = lambda tile: tiles.get(f"{tile.row}{tile.col-1}")
+        merge_check = lambda tile, next_tile: tile.x > next_tile.x + MOVE_VEL
+        move_check = (
+            lambda tile, next_tile: tile.x > next_tile.x + RECT_WIDTH + MOVE_VEL
+        )
+        ceil = True
+
     elif direction == "right":
         pass
 
@@ -119,6 +130,21 @@ def move_tiles(window, tiles, clock, direction):
     
     elif direction == "down":
         pass
+
+    while updated:
+        clock.tick(FPS)
+        updated = False
+        sorted_tiles = sorted(tiles.values(), key=sort_func, reverse=reverse)
+
+        for i, tile in enumerate(sorted_tiles):
+            if boundary_check(tile):
+                continue
+            
+            next_tile = get_next_tile(tile)
+            if not next_tile:
+                tile.move(delta)
+
+
 
 def generate_tiles():
     tiles = {}
