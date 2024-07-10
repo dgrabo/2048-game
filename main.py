@@ -65,9 +65,16 @@ class Tile:
         ) 
 
 
-    def set_pos(self):
-        pass
+    def set_pos(self, ceil=False):
+        if ceil:
+            self.row = math.ceil(self.y / RECT_HEIGHT)
+            self.col = math.ceil(self.x / RECT_WIDTH)
+        else:
+            self.row = math.floor(self.y / RECT_HEIGHT)
+            self.col = math.floor(self.x / RECT_WIDTH)
 
+
+            
     def move(self, delta):
         self.x += delta[0]
         self.y += delta[1]
@@ -158,6 +165,8 @@ def move_tiles(window, tiles, clock, direction):
                 tile.move(delta)
             else:
                 continue 
+
+            updated = True
             
 
 
